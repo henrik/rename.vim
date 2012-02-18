@@ -39,6 +39,7 @@ function! Rename(name, bang)
 
     let v:errmsg = ''
     silent! exe 'saveas' . a:bang . ' ' . l:name
+    filetype detect
 
     if v:errmsg =~# '^$\|^E329'
         let l:lastbufnr = bufnr('$')
