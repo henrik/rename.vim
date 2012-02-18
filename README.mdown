@@ -3,19 +3,20 @@ Git branch of http://www.vim.org/scripts/script.php?script_id=1928
 **rename.vim**  -  Rename a buffer within Vim and on the disk
 -----------------------------------------------------
 
-Copyright June 2007 by Christian J. Robinson (infynity@onewest.net)  
-Updated August 2011 by Dan Rogers (dan@danro.net)  
+Copyright June 2007 by Christian J. Robinson (infynity@onewest.net).
+
+Updated August 2011 by Dan Rogers (dan@danro.net).
+
+Updated February 2012 with fixes by [Andrew Raw](http://andrewray.me), added by [Henrik Nyh](http://henrik.nyh.se).
 
 Distributed under the terms of the Vim license.  See ":help license".
 
-Changes
--------
-
- * Now retains path relative to global current directory.
- * Added lowercase "rename" alias.
 
 Usage:
 ------
 
-    :rename[!] {newname}
+    :Rename[!] {new_name}
 
+or
+
+    :Rename[!] {some/new_path/new_name}
