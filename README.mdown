@@ -15,8 +15,21 @@ Distributed under the terms of the Vim license.  See ":help license".
 Usage:
 ------
 
-    :Rename[!] {new_name}
+Give the current file a new name in the same directory:
 
-or
+    :Rename bar.txt
 
-    :Rename[!] {some/new_path/new_name}
+Give the current file a new name in a directory relative to the working directory:
+
+    :Rename sub/bar.txt
+    :Rename ../sibling/bar.txt
+
+Give the current file a new name in an absolute directory:
+
+    :Rename /tmp/bar.txt
+
+Add a bang to create the directories if they don't exist:
+
+    :Rename! create/these/dirs/bar.txt
+
+The bang is required so typos don't create unintended directories.
