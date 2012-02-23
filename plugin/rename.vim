@@ -44,7 +44,7 @@ function! Rename(name, bang)
         call mkdir(l:dir, "p")
       else
         echohl ErrorMsg
-        echomsg 'The directory does not exist (use ! to override).'
+        echomsg 'The directory does not exist (use ! to create).'
         echohl None
         return 0
       endif
