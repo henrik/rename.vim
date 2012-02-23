@@ -14,6 +14,7 @@
 command! -nargs=* -complete=file -bang Rename call Rename(<q-args>, '<bang>')
 
 function! Rename(name, bang)
+
     " Attempt be smart, if the new file name has a slash in it, don't assume
     " current directory
     if matchstr(a:name, "/") == "/"
@@ -24,8 +25,9 @@ function! Rename(name, bang)
 
     let l:oldfile = expand('%:p')
 
+    " Replace buffer with same name if bang was given.
     if bufexists(fnamemodify(l:name, ':p'))
-        if (a:bang ==# '!')
+        if a:bang == '!'
             silent exe bufnr(fnamemodify(l:name, ':p')) . 'bwipe!'
         else
             echohl ErrorMsg
@@ -33,6 +35,19 @@ function! Rename(name, bang)
             echohl None
             return 0
         endif
+    endif
+
+    " Create missing directory if bang was given.
+    let l:dir = fnamemodify(l:name, ":p:h")
+    if !isdirectory(l:dir)
+      if a:bang == '!'
+        call mkdir(l:dir, "p")
+      else
+        echohl ErrorMsg
+        echomsg 'The directory does not exist (use ! to override).'
+        echohl None
+        return 0
+      endif
     endif
 
     let l:status = 1
