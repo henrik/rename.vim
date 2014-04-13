@@ -14,20 +14,27 @@
 command! -nargs=* -complete=file -bang Rename call Rename(<q-args>, '<bang>')
 
 function! Rename(name, bang)
+    if a:name =~ "!$"
+      let l:name = substitute(a:name, "!$", "", "")
+      let l:bang = 1
+    else
+      let l:name = a:name
+      let l:bang = (a:bang == '!')
+    endif
 
     " Attempt be smart, if the new file name has a slash in it, don't assume
     " current directory
     if matchstr(a:name, "/") == "/"
-        let l:name = a:name
+        let l:name = l:name
     else
-        let l:name = expand("%:h") . "/" . a:name
+        let l:name = expand("%:h") . "/" . l:name
     endif
 
     let l:oldfile = expand('%:p')
 
     " Replace buffer with same name if bang was given.
     if bufexists(fnamemodify(l:name, ':p'))
-        if a:bang == '!'
+        if l:bang
             silent exe bufnr(fnamemodify(l:name, ':p')) . 'bwipe!'
         else
             echohl ErrorMsg
@@ -40,7 +47,7 @@ function! Rename(name, bang)
     " Create missing directory if bang was given.
     let l:dir = fnamemodify(l:name, ":p:h")
     if !isdirectory(l:dir)
-      if a:bang == '!'
+      if l:bang
         call mkdir(l:dir, "p")
       else
         echohl ErrorMsg
@@ -53,7 +60,7 @@ function! Rename(name, bang)
     let l:status = 1
 
     let v:errmsg = ''
-    silent! exe 'saveas' . a:bang . ' ' . l:name
+    silent! exe 'saveas' . (l:bang ? '!' : '') . ' ' . l:name
     filetype detect
 
     if v:errmsg =~# '^$\|^E329'

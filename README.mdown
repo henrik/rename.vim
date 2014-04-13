@@ -30,6 +30,7 @@ Give the current file a new name in an absolute directory:
 
 Add a bang to create the directories if they don't exist:
 
+    :Rename create/these/dirs/bar.txt!
     :Rename! create/these/dirs/bar.txt
 
 The bang is required so typos don't create unintended directories.
